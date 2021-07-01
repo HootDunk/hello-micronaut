@@ -1,0 +1,14 @@
+micronaut:
+  application:
+    name: stockApp
+  server:
+    port: 8080
+hello:
+  controller:
+    path: "/hello"
+  service:
+    greeting: "Hello from service"
+  config:
+    greeting:
+      en: "Hello"
+      de: "Hallo"
