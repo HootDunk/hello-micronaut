@@ -43,66 +43,65 @@ public class WatchListControllerReactiveTest {
     @Inject
     InMemoryAccountStore store;
 
-    @Test
-    void returnsEmptyWatchListForAccount() {
-        final Single<WatchList> result = client.retrieve(GET("/"), WatchList.class).singleOrError();
-        // Single contains .blockingGet() which can return the element for the test
-        assertTrue(result.blockingGet().getSymbols().isEmpty());
-        assertTrue(store.getWatchList(TEST_ACCOUNT_ID).getSymbols().isEmpty());
-    }
-
-    @Test
-    void returnsEmptyWatchListForAccountAsSingle() {
-        final Single<WatchList> result = client.retrieve(GET("/"), WatchList.class).singleOrError();
-        // Single contains .blockingGet() which can return the element for the test
-        assertTrue(result.blockingGet().getSymbols().isEmpty());
-        assertTrue(store.getWatchList(TEST_ACCOUNT_ID).getSymbols().isEmpty());
-    }
-
-    @Test
-    void returnsWatchListForAccount() {
-        final List<Symbol> symbols = Stream.of("APPL", "AMZN", "NFLX")
-                .map(Symbol::new)
-                .collect(Collectors.toList());
-        WatchList watchList = new WatchList(symbols);
-        store.updateWatchList(TEST_ACCOUNT_ID, watchList);
-
-        final WatchList result = client.toBlocking().retrieve("/", WatchList.class);
-        assertEquals(3, result.getSymbols().size());
-        assertEquals(3, store.getWatchList(TEST_ACCOUNT_ID).getSymbols().size());
-
-    }
-
-    @Test
-    void canUpdateWatchListForAccount() {
-        final List<Symbol> symbols = Stream.of("APPL", "AMZN", "NFLX")
-                .map(Symbol::new)
-                .collect(Collectors.toList());
-        WatchList watchList = new WatchList(symbols);
-
-        final HttpResponse<Object> added = client.toBlocking().exchange(PUT("/", watchList));
-        // ensure http response is ok
-        assertEquals(HttpStatus.OK, added.getStatus());
-        // test new object is in the store
-        assertEquals(watchList, store.getWatchList(TEST_ACCOUNT_ID));
-    }
-
-    @Test
-    void canDeleteWatchListForAccount() {
-        final List<Symbol> symbols = Stream.of("APPL", "AMZN", "NFLX")
-                .map(Symbol::new)
-                .collect(Collectors.toList());
-        WatchList watchList = new WatchList(symbols);
-        store.updateWatchList(TEST_ACCOUNT_ID, watchList);
-        // ensure watchlist is not empty
-        assertFalse(store.getWatchList(TEST_ACCOUNT_ID).getSymbols().isEmpty());
-
-        final HttpResponse<Object> deleted = client.toBlocking().exchange(DELETE("/" + TEST_ACCOUNT_ID));
-        // ensure http response is ok
-        assertEquals(HttpStatus.OK, deleted.getStatus());
-        // test new object is in the store
-        assertTrue(store.getWatchList(TEST_ACCOUNT_ID).getSymbols().isEmpty());
-    }
+//    @Test
+//    void returnsEmptyWatchListForAccount() {
+//        final Single<WatchList> result = client.retrieve(GET("/"), WatchList.class).singleOrError();
+//        // Single contains .blockingGet() which can return the element for the test
+//        assertTrue(result.blockingGet().getSymbols().isEmpty());
+//        assertTrue(store.getWatchList(TEST_ACCOUNT_ID).getSymbols().isEmpty());
+//    }
+//
+//    @Test
+//    void returnsEmptyWatchListForAccountAsSingle() {
+//        final Single<WatchList> result = client.retrieve(GET("/"), WatchList.class).singleOrError();
+//        // Single contains .blockingGet() which can return the element for the test
+//        assertTrue(result.blockingGet().getSymbols().isEmpty());
+//        assertTrue(store.getWatchList(TEST_ACCOUNT_ID).getSymbols().isEmpty());
+//    }
+//
+//    @Test
+//    void returnsWatchListForAccount() {
+//        final List<Symbol> symbols = Stream.of("APPL", "AMZN", "NFLX")
+//                .map(Symbol::new)
+//                .collect(Collectors.toList());
+//        WatchList watchList = new WatchList(symbols);
+//        store.updateWatchList(TEST_ACCOUNT_ID, watchList);
+//
+//        final WatchList result = client.toBlocking().retrieve("/", WatchList.class);
+//        assertEquals(3, result.getSymbols().size());
+//        assertEquals(3, store.getWatchList(TEST_ACCOUNT_ID).getSymbols().size());
+//    }
+//
+//    @Test
+//    void canUpdateWatchListForAccount() {
+//        final List<Symbol> symbols = Stream.of("APPL", "AMZN", "NFLX")
+//                .map(Symbol::new)
+//                .collect(Collectors.toList());
+//        WatchList watchList = new WatchList(symbols);
+//
+//        final HttpResponse<Object> added = client.toBlocking().exchange(PUT("/", watchList));
+//        // ensure http response is ok
+//        assertEquals(HttpStatus.OK, added.getStatus());
+//        // test new object is in the store
+//        assertEquals(watchList, store.getWatchList(TEST_ACCOUNT_ID));
+//    }
+//
+//    @Test
+//    void canDeleteWatchListForAccount() {
+//        final List<Symbol> symbols = Stream.of("APPL", "AMZN", "NFLX")
+//                .map(Symbol::new)
+//                .collect(Collectors.toList());
+//        WatchList watchList = new WatchList(symbols);
+//        store.updateWatchList(TEST_ACCOUNT_ID, watchList);
+//        // ensure watchlist is not empty
+//        assertFalse(store.getWatchList(TEST_ACCOUNT_ID).getSymbols().isEmpty());
+//
+//        final HttpResponse<Object> deleted = client.toBlocking().exchange(DELETE("/" + TEST_ACCOUNT_ID));
+//        // ensure http response is ok
+//        assertEquals(HttpStatus.OK, deleted.getStatus());
+//        // test new object is in the store
+//        assertTrue(store.getWatchList(TEST_ACCOUNT_ID).getSymbols().isEmpty());
+//    }
 
 
 }

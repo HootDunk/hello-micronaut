@@ -4,11 +4,17 @@ package com.broker;
 import com.broker.error.CustomError;
 import com.broker.model.Quote;
 import com.broker.store.InMemoryStore;
+import com.example.Application;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
+import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.PathVariable;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.Optional;
 
@@ -20,7 +26,13 @@ public class QuotesController {
         this.store = store;
     }
 
-    // passing the symbol as a path parameter
+
+    @Operation(summary = "Returns a quote for the given symbol.")
+    @ApiResponse(
+            content = @Content(mediaType = MediaType.APPLICATION_JSON)
+    )
+    @ApiResponse(responseCode = "400", description = "Invalid symbol specified")
+    @Tag(name = "quotes")
     @Get("/{symbol}")
     public HttpResponse getQuotes(@PathVariable String symbol){
         final Optional<Quote> maybeQuote = store.fetchQuote(symbol);
