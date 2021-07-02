@@ -12,7 +12,6 @@ public class Application {
     public static void main(String[] args) {
         final ApplicationContext context = Micronaut.run(Application.class);
         final HelloWorldService service = context.getBean(HelloWorldService.class);
-        LOG.info(service.sayHi());
         context.close();
 //        Micronaut.run(Application.class, args);
     }

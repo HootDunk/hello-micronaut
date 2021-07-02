@@ -16,10 +16,10 @@ public class HelloWorldService {
     @Property(name = "hello.service.greeting", defaultValue = "default value")
     private String greeting;
 
-    @EventListener
-    public void onStartup(StartupEvent startupEvent){
-        LOG.debug("Startup: {}", HelloWorldService.class.getSimpleName());
-    }
+//    @EventListener
+//    public void onStartup(StartupEvent startupEvent){
+//        LOG.debug("Startup: {}", HelloWorldService.class.getSimpleName());
+//    }
 
     public String sayHi() {
         return greeting;
